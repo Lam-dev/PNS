@@ -1,5 +1,4 @@
 from GlobalClass.GlobalClass import DataGPS
-from MainScreen.NetworkAndConnectNotify import NetworkAndConnectNotify
 from NetworkModule.ProcessResponse import ProcessResponse
 import time
 from UART.UARTconnection   import UART
