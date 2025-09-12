@@ -4,8 +4,6 @@ from      GlobalClass.GlobalClass   import   DataGPS
 import random
 from datetime import datetime
 import os
-
-
 class GetLocation(QObject):
 
     def __init__(self):
@@ -13,12 +11,6 @@ class GetLocation(QObject):
         self.__flagTimeUpdated = False
         self.__fakeGPS = False
         
-    def setGlobalObj(self, globalObj):
-        from GlobalClass.GlobalObject import GlobalObject
-        self.__loggingObj = globalObj.loggingObj
-        self.__globalObj = globalObj
-        self.__globalObj.SignalFakeGPS.connect(self.FakeGPS)
-
     def FakeGPS(self, fake):
         #10.376197, 105.416466
         # self.preLat = 21.015636
@@ -78,8 +70,7 @@ class GetLocation(QObject):
         try:
             lstDatasInGPS = gprmcMessage.split(',')
             if(lstDatasInGPS[2] == "A"):
-                if(not self.__globalObj.timeUpdated):
-                    self.__processTime(lstDatasInGPS[1], lstDatasInGPS[9])
+              
                 latLoc = round(self.__degreeMinute2degree(float(lstDatasInGPS[3])), 6)
                 longloc = round(self.__degreeMinute2degree(float(lstDatasInGPS[5])), 6)
                 speed = int(float(lstDatasInGPS[7])*1.85)
@@ -104,7 +95,7 @@ class GetLocation(QObject):
     def __processTime(self, stringTime, stringDate):
         time = stringTime[0:2] + ':' + stringTime[2:4] + ':' + stringTime[4:6]
         date = str(2000 + int(stringDate[4:6])) + '/'+ stringDate[2:4] + '/' + stringDate[0:2]
-        self.__globalObj.UpdateTimeFromGPS(time, date)
+       
         # try:
             # os.system('date +%Y/%m/%d -s ' + '"%s"'%(date))
             # os.system('date +%T -s ' +'"%s"'%(time))

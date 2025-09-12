@@ -6,10 +6,6 @@ class ControlPowerPin:
         self.__gpioObj  = GPIO
         self.__setupOutputMode()
         self.__disableAll()
-        self.__globalObj = None
-
-    def SetGlobalObj(self, globalObj):
-        self.__globalObj = globalObj
 
     def __setupOutputMode(self):
         self.__gpioObj.setup(GPIOdefine.SimReset.value, self.__gpioObj.OUT)

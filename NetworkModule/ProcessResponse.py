@@ -2,8 +2,6 @@ from typing import Optional
 from PyQt5.QtCore import QObject
 from PyQt5.QtCore   import pyqtSlot, pyqtSignal,QTimer, QDateTime,Qt, QObject
 from GlobalClass.GlobalClass import DataGPS
-from MainScreen.NetworkAndConnectNotify import NetworkAndConnectNotify
-
 from NetworkModule.GetLocationFromGPRMC   import  GetLocation
 import os
 
@@ -68,17 +66,6 @@ class ProcessResponse(QObject):
             self.SignalHaveNoGPSmessage.emit()
             self.__networkAndConnectNotify.gpsErr()
         self.__flagReciptedGPSmessage = False
-
-    def setGlobalObj(self, globalObj):
-        from GlobalClass.GlobalObject import GlobalObject
-        self.__globalObj:GlobalObject = globalObj
-        if(self.__globalObj.networkAndConnectNotifyObj != None):
-            self.__networkAndConnectNotify:NetworkAndConnectNotify = self.__globalObj.networkAndConnectNotifyObj
-        # self.__networkAndConnectNotify.SignalResetSimModule.connect(self.resetSim)
-        self.__loggingObj = globalObj.loggingObj
-        self.__getLocationFromGPRMC.setGlobalObj(globalObj)
-        
-        self.__globalObj.SignalFakeGPS.connect(self.__fakeGPS)
 
     def processResponseData(self, data):
         """xử lý dữ liệu nhận từ module 4G

@@ -28,7 +28,7 @@ class ControlNetWorkModule(QObject):
         GPIO.setmode(GPIO.BCM)
         self.__controlPowerObj = ControlPowerPin(GPIO)
         self.GPIOobj = GPIO
-        self.__globalObj = None
+      
         self.__runOnDevice = os.uname()[2].__contains__("sunxi")
         if(self.__runOnDevice):
             self.uartObj = UART("/dev/ttyS2", 115200, 0.2)
@@ -91,7 +91,7 @@ class ControlNetWorkModule(QObject):
             self.timerWaitFor4GmoduleReponse.stop()   
             self.stepInit4Gmodule = Init4GmoduleStep.CGPS.value
             self.__controlPowerObj.resetModuleThread()
-            self.__globalObj.isOn4G = True
+            
 
     def OffSimModule(self, force):
         """Tat module sim cho che do khong chay DAT
@@ -103,25 +103,12 @@ class ControlNetWorkModule(QObject):
             self.__flagSimNotInserted = False
             self.timerWaitFor4GmoduleReponse.stop()
             self.stepInit4Gmodule = Init4GmoduleStep.CGPS.value
-            self.__globalObj.isOn4G = True
+          
             self.__offSimModule()
-
-    def setGlobalObj(self, globalObj):
-        # self.processReciptObj.setGlobalObj(globalObj)
-        self.__globalObj = globalObj
-        # self.__loggingObj = globalObj.loggingObj
-        self.__controlPowerObj.SetGlobalObj(globalObj)
-        self.__processResponse.setGlobalObj(globalObj)
-        # self.__networkAndConnectNotify = globalObj.networkAndConnectNotifyObj
-        # self.__networkAndConnectNotify.SignalResetSimModule.connect(self.__ResetSimModule)
-        # self.__networkAndConnectNotify.SignalInternetAvailable.connect(self.__internetAvailable)
-        # self.__networkAndConnectNotify.SignalNotInternet.connect(self.__notInternet)
-        # self.__networkAndConnectNotify.SignalShutdownSimModule.connect(self.__offSimModule)
-        # self.__SignalShowSPN.connect(self.__networkAndConnectNotify.showSPN)
     
     def __offSimModule(self):
         self.__controlPowerObj.offSimModule()
-        self.__globalObj.isOn4G = False
+  
 
     def __internetAvailable(self):
         self.__internetIsAvalable = True
