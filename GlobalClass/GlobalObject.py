@@ -125,7 +125,7 @@ class GlobalObject(QObject):
         self.GetFaceParam()
         self.makeError = MakeError(self)
         self.lockReasonCode = LockReason.Unknown
-        self.lockLogin = self.config.lockLogin| self.centerSettings['dvLock']
+        self.lockLogin = self.config.lockLogin | self.centerSettings['dvLock']
         if(self.centerSettings['dvLock']):
             self.lockReasonCode = LockReason.CenterLock
 

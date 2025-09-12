@@ -78,12 +78,15 @@ class ConfigModel(BaseModel):
 
     nonDaTmode:bool = False    #chế độ luôn bật cho GPS24
     allowHideInputPhone:bool = True
-    detectInShape:bool = True  # xác định xe chạy trong hình hay đường trường.
+    detectInShape:bool = False  # xác định xe chạy trong hình hay đường trường.
     listShapeVer:int = 1  #phiên bản của danh sách sân. Khi phiên bản này khác với phiên bản trong danh sách sân thì sẽ kết nối server để tải ds sân mới. 
     numberTimeManualLogin:int = 0  # số lần cho phép đăng nhập bằng tên. 
-    usingECCmodule:bool = False  # có cho phiép sử dụng ECC module ko. 
+    usingECCmodule:bool = True  # có cho phiép sử dụng ECC module ko.
     identFaceAuthen:bool = True  # lấy ảnh từ căn cước để nhận diện.
 
     allowRescue:bool = False
     rescueThreshold:float = 0.5
     loginOnlyGPSavailable:bool = False
+
+    checkCabinLesson:bool = True
+    cabinLessonPort:str = "8088"

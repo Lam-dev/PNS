@@ -1,4 +1,3 @@
-from typing import Optional
 from GlobalClass.GlobalClass import DataGPS
 from MainScreen.NetworkAndConnectNotify import NetworkAndConnectNotify
 from NetworkModule.ProcessResponse import ProcessResponse
@@ -18,13 +17,12 @@ from NetworkModule.ControlPowerPin   import  ControlPowerPin
 from NetworkModule.InitQmi     import  InitQmi
 
 class ControlNetWorkModule(QObject):
-
     SignalGPSdata = pyqtSignal(DataGPS)
     SignalGPSinvalid = pyqtSignal()
     SignalImei = pyqtSignal(list)
     __SignalShowSPN = pyqtSignal(str)
 
-    def __init__(self, networkNotificationFrame:NetworkAndConnectNotify):
+    def __init__(self):
         QObject.__init__(self)
         GPIO.setwarnings(True)
         GPIO.setboard(GPIO.PCPCPLUS)
@@ -51,12 +49,8 @@ class ControlNetWorkModule(QObject):
         self.__internetIsAvalable = False
         self.__moduleIsRunning = False
 
-        self.__timerRequestCNSandSPN = QTimer(self)
-        self.__timerRequestCNSandSPN.timeout.connect(self.__requestSPNandCNS)
-
         self.stepInit4Gmodule = Init4GmoduleStep.CGPS.value
         self.uartObj.SignalReciptedData.connect(self.__processResponse.processResponseData)
-        self.__networkAndConnectNotify:NetworkAndConnectNotify = networkNotificationFrame
         self.timerWaitFor4GmoduleReponse = QTimer(self)
         self.timerWaitFor4GmoduleReponse.timeout.connect(self.SendInit)
         self.__flagSimNotInserted = False
@@ -65,31 +59,6 @@ class ControlNetWorkModule(QObject):
         self.runInit4GshTime = 0
         self.__numberTimesRequestSPNfail = 0
         
-    def __requestSPNandCNS(self):
-        self.__numberTimesRequestSPNfail += 1
-        if(self.__numberTimesRequestSPNfail == 18):
-            self.__timerRequestCNSandSPN.stop()
-            self.__numberTimesRequestSPNfail = 0
-            if((not self.__internetIsAvalable)&(not self.__moduleIsRunning)):
-                self.__moduleIsRunning = True
-                self.__ResetSimModule(forceReset=True)
-            return
-        _SPNshowStt = self.__networkAndConnectNotify.getSPNshowStt()
-        if(not _SPNshowStt):
-            print("lai _SPNshowStt")
-            self.uartObj.SendDataToUART(self.__characterToByte("AT+CSPN?\r"))
-            return
-        _networkModeShowStt = self.__networkAndConnectNotify.getNetworkModeShowStt()
-        if(not _networkModeShowStt):
-            print("lai _networkModeShowStt")
-            self.uartObj.SendDataToUART(self.__characterToByte("AT+CNSMOD?\r"))
-            return
-        if(not self.__processResponse.flagRecitedGPRMC):
-            print("lai flagRecitedGPRMC")
-            self.uartObj.SendDataToUART(self.__characterToByte("AT+CGPSINFOCFG=3,3\r"))
-            return
-        self.__timerRequestCNSandSPN.stop()
-    
     def __unplugSim(self):
         self.__flagSimNotInserted = True
 
@@ -144,12 +113,12 @@ class ControlNetWorkModule(QObject):
         # self.__loggingObj = globalObj.loggingObj
         self.__controlPowerObj.SetGlobalObj(globalObj)
         self.__processResponse.setGlobalObj(globalObj)
-        self.__networkAndConnectNotify = globalObj.networkAndConnectNotifyObj
-        self.__networkAndConnectNotify.SignalResetSimModule.connect(self.__ResetSimModule)
-        self.__networkAndConnectNotify.SignalInternetAvailable.connect(self.__internetAvailable)
-        self.__networkAndConnectNotify.SignalNotInternet.connect(self.__notInternet)
-        self.__networkAndConnectNotify.SignalShutdownSimModule.connect(self.__offSimModule)
-        self.__SignalShowSPN.connect(self.__networkAndConnectNotify.showSPN)
+        # self.__networkAndConnectNotify = globalObj.networkAndConnectNotifyObj
+        # self.__networkAndConnectNotify.SignalResetSimModule.connect(self.__ResetSimModule)
+        # self.__networkAndConnectNotify.SignalInternetAvailable.connect(self.__internetAvailable)
+        # self.__networkAndConnectNotify.SignalNotInternet.connect(self.__notInternet)
+        # self.__networkAndConnectNotify.SignalShutdownSimModule.connect(self.__offSimModule)
+        # self.__SignalShowSPN.connect(self.__networkAndConnectNotify.showSPN)
     
     def __offSimModule(self):
         self.__controlPowerObj.offSimModule()
@@ -206,10 +175,7 @@ class ControlNetWorkModule(QObject):
     def __runIniQMI(self):
         """chạy lệnh khởi tạo QMI
         """
-        if(self.__globalObj.LS_GT):
-            haveQmiDevice, spn = False, ""
-        else:
-            haveQmiDevice, spn = InitQmi.initQmi()
+        haveQmiDevice, spn = InitQmi.initQmi()
         self.__networkAndConnectNotify.findQmiDevice(haveQmiDevice)
         self.__flagQMIisRunning = False
         self.__SignalShowSPN.emit(spn)

@@ -51,8 +51,6 @@ class ControlPowerPin:
         self.__gpioObj.isOn4G = False
         
     def resetModuleThread(self):
-        if(self.__globalObj.LS_NG):
-            return
         thread = threading.Thread(target=self.__resetModule, args = (), daemon=True)
         thread.start()
 

@@ -4,7 +4,7 @@ import shlex
 import subprocess
 from threading import Timer, Thread
 import time
-class ProcessManament:
+class ProcessManagement:
     __concentratordSP:subprocess.Popen
     __MQTTforwarderSP:subprocess.Popen
     __concentratordCommand:str = "sudo ./Concentratord/chirpstack-concentratord-sx1302 -c config.toml"
