@@ -24,7 +24,6 @@ class ControlNetWorkModule(QObject):
     def __init__(self):
         QObject.__init__(self)
         GPIO.setwarnings(True)
-        GPIO.setboard(GPIO.PCPCPLUS)
         GPIO.setmode(GPIO.BCM)
         self.__controlPowerObj = ControlPowerPin(GPIO)
         self.GPIOobj = GPIO

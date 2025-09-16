@@ -15,12 +15,6 @@ class Main(QObject):
         self.__networkModuleController = ControlNetWorkModule()
         self.__networkModuleController.Start4Gmodule()
         self.__concentratordAndForwarderPM = ProcessManagement()
-
-    #     self.__timerTest = QTimer(self)
-    #     self.__timerTest.timeout.connect(self.__test)
-    #     self.__timerTest.start(1000)
-    # def __test(self):
-    #     print("ok...")
     
 if __name__ == "__main__":
     app = QCoreApplication(sys.argv)

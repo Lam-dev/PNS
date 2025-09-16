@@ -31,7 +31,7 @@ class ProcessResponse(QObject):
         self.__timerFakeGPS.timeout.connect(lambda:self.processResponseData("GPRMC".encode("utf-8")))
         self.__flagSimNotInserted = False
         
-        # self.__runOnDevice = os.uname()[2].__contains__("sunxi")
+        self.__runOnDevice = os.uname()[2].__contains__("sunxi")
         
         # self.timerTestNetworkNotify.timeout.connect(self.testNetworkNotify)
         # self.timerTestNetworkNotify.start(7000)
@@ -73,8 +73,8 @@ class ProcessResponse(QObject):
             data ([bytes]): [dữ liệu nhận]
         """
         stringMessage = self.__byteToCharacter(data)
-        # if(self.__runOnDevice):
-        #     print(stringMessage)
+        if(self.__runOnDevice):
+            print(stringMessage)
         if(stringMessage.__contains__("GPRMC")):
             if(self.__globalObj.LS_DV):
                 return
