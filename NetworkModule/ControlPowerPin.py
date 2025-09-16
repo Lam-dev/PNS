@@ -8,12 +8,12 @@ class ControlPowerPin:
         self.__disableAll()
 
     def __setupOutputMode(self):
-        self.__gpioObj.setup(GPIOdefine.SimReset.value, self.__gpioObj.OUT)
+        # self.__gpioObj.setup(GPIOdefine.SimReset.value, self.__gpioObj.OUT)
         self.__gpioObj.setup(GPIOdefine.ModulePowerOn.value, self.__gpioObj.OUT)
         self.__gpioObj.setup(GPIOdefine.SimPowerOn.value, self.__gpioObj.OUT)
 
     def __disableAll(self):
-        self.__gpioObj.output(GPIOdefine.SimReset.value, self.__gpioObj.LOW)
+        # self.__gpioObj.output(GPIOdefine.SimReset.value, self.__gpioObj.LOW)
         self.__gpioObj.output(GPIOdefine.ModulePowerOn.value, self.__gpioObj.LOW)
         self.__gpioObj.output(GPIOdefine.SimPowerOn.value, self.__gpioObj.LOW)
 
