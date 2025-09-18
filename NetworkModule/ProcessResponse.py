@@ -76,12 +76,11 @@ class ProcessResponse(QObject):
         if(self.__runOnDevice):
             print(stringMessage)
         if(stringMessage.__contains__("GPRMC")):
-            if(self.__globalObj.LS_DV):
-                return
+          
             self.flagRecitedGPRMC = True
             self.__flagReciptedGPSmessage = True
             _valid, gpsData = self.__getLocationFromGPRMC.analysGPRMC(stringMessage)
-            if(_valid & (not self.__globalObj.LS_GP)):
+            if(_valid):
                 self.SignalGPSdata.emit(gpsData)
                 # self.__networkAndConnectNotify.gpsStt(True)
             else:
@@ -99,9 +98,7 @@ class ProcessResponse(QObject):
             self.__analysCNSMode(stringMessage)
             
         elif(stringMessage.__contains__("PB DONE")):
-            if(self.__globalObj.LS_LS):
-                self.__error("inserted")
-                return
+           
             self.SignalSendInit.emit()
 
         elif(stringMessage.__contains__("CSPN:")):
