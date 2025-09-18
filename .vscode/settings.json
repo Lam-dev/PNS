@@ -1,0 +1,6 @@
+"python.analysis.diagnosticSeverityOverrides": {
+    "reportMissingImports": "error",
+    "reportUnusedImport": "warning",
+    "reportOptionalMemberAccess": "information",
+    "reportUnnecessaryCast": "hint"
+}

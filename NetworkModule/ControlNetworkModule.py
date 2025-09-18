@@ -148,7 +148,7 @@ class ControlNetWorkModule(QObject):
             self.uartObj.SendDataToUART(self.__characterToByte("AT+CSPN?\r")) # lấy tên nhà mạng.
         else:
             if((not self.__flagSimNotInserted)):
-                self.__timerRequestCNSandSPN.start(3000)
+                # self.__timerRequestCNSandSPN.start(3000)
                 if((not self.__flagQMIisRunning) & self.__processResponse.flagIs4Gor3G):
                     self.timerWaitFor4GmoduleReponse.stop()
                     self.__flagQMIisRunning = True
