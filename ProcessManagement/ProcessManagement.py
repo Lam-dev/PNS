@@ -14,13 +14,15 @@ class ProcessManagement:
     def __init__(self):
         self.__timerCheckProcessIsRun = Timer(interval=30,  function=self.__CheckProcessIsLive)
         if(os.uname()[2].__contains__("sunxi")):
-            Thread(target=self.__StartConcentratordAndForwarder, args=(), daemon=False).start()
+            self.__StartConcentratordAndForwarder()
+            
             self.__timerCheckProcessIsRun.start()
         
     def __StartConcentratordAndForwarder(self):
-        self.__RunConcentratord()
+        Thread(target=self.__RunConcentratord, args=(), daemon=False).start()
         time.sleep(10)
-        self.__RunMQTTforwarder()
+        Thread(target=self.__RunMQTTforwarder, args=(), daemon=False).start()
+
 
     def __CheckProcessIsLive(self):
         concentratordRet = self.__concentratordSP.poll()
@@ -33,11 +35,13 @@ class ProcessManagement:
 
     def __RunConcentratord(self):
         print("chay process concentrator")
-        self.__concentratordSP = subprocess.Popen(shlex.split(self.__concentratordCommand), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, preexec_fn=os.setpgrp)
+        os.system(self.__concentratordCommand)
+        # self.__concentratordSP = subprocess.Popen(shlex.split(self.__concentratordCommand), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, preexec_fn=os.setpgrp)
         print("chay xong process concentrator")
 
     def __RunMQTTforwarder(self):
         print("chay process MQTTforwarder")
-        self.__MQTTforwarderSP = subprocess.Popen(shlex.split(self.__MQTTforwarderCommand), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, preexec_fn=os.setpgrp)
+        os.system(self.__MQTTforwarderCommand)
+        # self.__MQTTforwarderSP = subprocess.Popen(shlex.split(self.__MQTTforwarderCommand), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, preexec_fn=os.setpgrp)
         print("chay xong process MQTTforwarder")
     
