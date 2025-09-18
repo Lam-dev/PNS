@@ -32,9 +32,12 @@ class ProcessManagement:
             pass
 
     def __RunConcentratord(self):
+        print("chay process concentrator")
         self.__concentratordSP = subprocess.Popen(shlex.split(self.__concentratordCommand), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, preexec_fn=os.setpgrp)
+        print("chay xong process concentrator")
 
     def __RunMQTTforwarder(self):
+        print("chay process MQTTforwarder")
         self.__MQTTforwarderSP = subprocess.Popen(shlex.split(self.__MQTTforwarderCommand), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, preexec_fn=os.setpgrp)
-        
+        print("chay xong process MQTTforwarder")
     
