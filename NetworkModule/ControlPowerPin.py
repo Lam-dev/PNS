@@ -25,6 +25,7 @@ class ControlPowerPin:
     def __startSimModulePowerPin(self):
         """điều khiển các chân ngùôn của module sim
         """
+        print("bat nguon module sim")
         self.__gpioObj.output(GPIOdefine.ModulePowerOn.value, self.__gpioObj.LOW) # kéo nguồn module xuống
         # self.__gpioObj.output(GPIOdefine.SimPowerOn.value, self.__gpioObj.LOW)# #kéo nguồn sim xuống
         time.sleep(2) # chờ 2s
