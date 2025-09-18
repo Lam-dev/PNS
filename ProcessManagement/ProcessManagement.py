@@ -8,7 +8,7 @@ class ProcessManagement:
     __concentratordSP:subprocess.Popen
     __MQTTforwarderSP:subprocess.Popen
     __concentratordCommand:str = "sudo ./Concentratord/chirpstack-concentratord-sx1302 -c Concentratord/config.toml"
-    __MQTTforwarderCommand:str = "sudo ./MQTTforwarder/chirpstack-mqtt-forwarder -c Concentratord/config.toml"
+    __MQTTforwarderCommand:str = "sudo ./MQTTforwarder/chirpstack-mqtt-forwarder -c MQTTforwarder/config.toml"
     __timerCheckProcessIsRun:Timer
 
     def __init__(self):
