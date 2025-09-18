@@ -149,7 +149,7 @@ class ControlNetWorkModule(QObject):
         else:
             if((not self.__flagSimNotInserted)):
                 # self.__timerRequestCNSandSPN.start(3000)
-                if((not self.__flagQMIisRunning) & self.__processResponse.flagIs4Gor3G):
+                if((not self.__flagQMIisRunning)):
                     self.timerWaitFor4GmoduleReponse.stop()
                     self.__flagQMIisRunning = True
                     thread =threading.Thread(target = self.__runIniQMI, args = (), daemon = True)
@@ -160,6 +160,7 @@ class ControlNetWorkModule(QObject):
     def __runIniQMI(self):
         """chạy lệnh khởi tạo QMI
         """
+        print("khoi dong QMI")
         haveQmiDevice, spn = InitQmi.initQmi()
         # self.__networkAndConnectNotify.findQmiDevice(haveQmiDevice)
         self.__flagQMIisRunning = False
