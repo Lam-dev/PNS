@@ -161,7 +161,7 @@ class ControlNetWorkModule(QObject):
         """chạy lệnh khởi tạo QMI
         """
         haveQmiDevice, spn = InitQmi.initQmi()
-        self.__networkAndConnectNotify.findQmiDevice(haveQmiDevice)
+        # self.__networkAndConnectNotify.findQmiDevice(haveQmiDevice)
         self.__flagQMIisRunning = False
         self.__SignalShowSPN.emit(spn)
             
