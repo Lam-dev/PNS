@@ -9,30 +9,30 @@ class ControlPowerPin:
 
     def __setupOutputMode(self):
         # self.__gpioObj.setup(GPIOdefine.SimReset.value, self.__gpioObj.OUT)
-        # self.__gpioObj.setup(GPIOdefine.ModulePowerOn.value, self.__gpioObj.OUT)
-        self.__gpioObj.setup(GPIOdefine.SimPowerOn.value, self.__gpioObj.OUT)
+        self.__gpioObj.setup(GPIOdefine.ModulePowerOn.value, self.__gpioObj.OUT)
+        # self.__gpioObj.setup(GPIOdefine.SimPowerOn.value, self.__gpioObj.OUT)
 
     def __disableAll(self):
         # self.__gpioObj.output(GPIOdefine.SimReset.value, self.__gpioObj.LOW)
-        # self.__gpioObj.output(GPIOdefine.ModulePowerOn.value, self.__gpioObj.LOW)
-        self.__gpioObj.output(GPIOdefine.SimPowerOn.value, self.__gpioObj.LOW)
+        self.__gpioObj.output(GPIOdefine.ModulePowerOn.value, self.__gpioObj.LOW)
+        # self.__gpioObj.output(GPIOdefine.SimPowerOn.value, self.__gpioObj.LOW)
 
-    def resetSimPowerPin(self):
-        self.__gpioObj.output(GPIOdefine.SimPowerOn.value, self.__gpioObj.HIGH)
-        time.sleep(0.3)
-        self.__gpioObj.output(GPIOdefine.SimPowerOn.value, self.__gpioObj.LOW)
+    # def resetSimPowerPin(self):
+    #     self.__gpioObj.output(GPIOdefine.SimPowerOn.value, self.__gpioObj.HIGH)
+    #     time.sleep(0.3)
+    #     self.__gpioObj.output(GPIOdefine.SimPowerOn.value, self.__gpioObj.LOW)
 
     def __startSimModulePowerPin(self):
         """điều khiển các chân ngùôn của module sim
         """
-        # self.__gpioObj.output(GPIOdefine.ModulePowerOn.value, self.__gpioObj.LOW) # kéo nguồn module xuống
-        self.__gpioObj.output(GPIOdefine.SimPowerOn.value, self.__gpioObj.LOW)# #kéo nguồn sim xuống
+        self.__gpioObj.output(GPIOdefine.ModulePowerOn.value, self.__gpioObj.LOW) # kéo nguồn module xuống
+        # self.__gpioObj.output(GPIOdefine.SimPowerOn.value, self.__gpioObj.LOW)# #kéo nguồn sim xuống
         time.sleep(2) # chờ 2s
-        # self.__gpioObj.output(GPIOdefine.ModulePowerOn.value, self.__gpioObj.HIGH) # kéo nguồn module lên
+        self.__gpioObj.output(GPIOdefine.ModulePowerOn.value, self.__gpioObj.HIGH) # kéo nguồn module lên
         time.sleep(1) # chờ 1s
-        self.__gpioObj.output(GPIOdefine.SimPowerOn.value, self.__gpioObj.HIGH) #kéo nguồn sim lên
-        time.sleep(0.3) # chờ 0.3s
-        self.__gpioObj.output(GPIOdefine.SimPowerOn.value, self.__gpioObj.LOW) # kéo nguồn sim xuông.
+        # self.__gpioObj.output(GPIOdefine.SimPowerOn.value, self.__gpioObj.HIGH) #kéo nguồn sim lên
+        # time.sleep(0.3) # chờ 0.3s
+        # self.__gpioObj.output(GPIOdefine.SimPowerOn.value, self.__gpioObj.LOW) # kéo nguồn sim xuông.
 
     def offSimModule(self):
         self.__disableAll()

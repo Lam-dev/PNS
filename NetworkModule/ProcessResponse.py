@@ -32,7 +32,7 @@ class ProcessResponse(QObject):
         self.__flagSimNotInserted = False
         
         self.__runOnDevice = os.uname()[2].__contains__("sunxi")
-        self.SignalSendInit.emit()
+        
         # self.timerTestNetworkNotify.timeout.connect(self.testNetworkNotify)
         # self.timerTestNetworkNotify.start(7000)
         # self.stepShow = 0

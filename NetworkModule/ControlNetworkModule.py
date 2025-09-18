@@ -78,7 +78,7 @@ class ControlNetWorkModule(QObject):
     
     def __sendCheckSimCard(self):
         if(self.__flagSimNotInserted):
-            self.__controlPowerObj.resetSimPowerPin()
+            # self.__controlPowerObj.resetSimPowerPin()
             self.uartObj.SendDataToUART(self.__characterToByte("AT+CPIN?\r"))
 
     def __ResetSimModule(self, forceReset):
