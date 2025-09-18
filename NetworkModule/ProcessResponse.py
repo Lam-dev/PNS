@@ -32,7 +32,7 @@ class ProcessResponse(QObject):
         self.__flagSimNotInserted = False
         
         self.__runOnDevice = os.uname()[2].__contains__("sunxi")
-        
+        self.SignalSendInit.emit()
         # self.timerTestNetworkNotify.timeout.connect(self.testNetworkNotify)
         # self.timerTestNetworkNotify.start(7000)
         # self.stepShow = 0
@@ -64,7 +64,7 @@ class ProcessResponse(QObject):
     def __CheckReciptedGPSmessage(self):
         if(not self.__flagReciptedGPSmessage):
             self.SignalHaveNoGPSmessage.emit()
-            self.__networkAndConnectNotify.gpsErr()
+            # self.__networkAndConnectNotify.gpsErr()
         self.__flagReciptedGPSmessage = False
 
     def processResponseData(self, data):
@@ -83,9 +83,9 @@ class ProcessResponse(QObject):
             _valid, gpsData = self.__getLocationFromGPRMC.analysGPRMC(stringMessage)
             if(_valid & (not self.__globalObj.LS_GP)):
                 self.SignalGPSdata.emit(gpsData)
-                self.__networkAndConnectNotify.gpsStt(True)
+                # self.__networkAndConnectNotify.gpsStt(True)
             else:
-                self.__networkAndConnectNotify.gpsStt(False)
+                # self.__networkAndConnectNotify.gpsStt(False)
                 self.SignalGPSinvalid.emit()
 
         elif((stringMessage.__len__() == 17) & (stringMessage[0:15].isdecimal())):
@@ -120,12 +120,12 @@ class ProcessResponse(QObject):
 
         elif(stringMessage.__contains__("+SIMCARD: NOT")):
             self.SignalUnplugSim.emit()
-            self.__networkAndConnectNotify.noSim()
+            # self.__networkAndConnectNotify.noSim()
             self.__flagSimNotInserted = True
 
     def __error(self, messageErr):
         if(messageErr.__contains__("inserted")):
-            self.__networkAndConnectNotify.noSim()
+            # self.__networkAndConnectNotify.noSim()
             self.SignalNotSim.emit()
             self.__flagSimNotInserted = True
     
@@ -141,16 +141,16 @@ class ProcessResponse(QObject):
         rssiAndBer = stringCSQ.split(':')[1]
         rssi = rssiAndBer.split(',')[0]
         rssiNumber = int(rssi)
-        if((rssiNumber > 24) & (rssiNumber <= 30)):
-            self.__networkAndConnectNotify.changeIntensity(4)
-        elif((rssiNumber > 18) & (rssiNumber <= 24)):
-            self.__networkAndConnectNotify.changeIntensity(3)
-        elif((rssiNumber > 10) & (rssiNumber <= 18)):
-            self.__networkAndConnectNotify.changeIntensity(2)
-        elif((rssiNumber >= 0) & (rssiNumber <= 10)):
-            self.__networkAndConnectNotify.changeIntensity(1)
-        else:
-            self.__networkAndConnectNotify.changeIntensity(0)
+        # if((rssiNumber > 24) & (rssiNumber <= 30)):
+        #     self.__networkAndConnectNotify.changeIntensity(4)
+        # elif((rssiNumber > 18) & (rssiNumber <= 24)):
+        #     self.__networkAndConnectNotify.changeIntensity(3)
+        # elif((rssiNumber > 10) & (rssiNumber <= 18)):
+        #     self.__networkAndConnectNotify.changeIntensity(2)
+        # elif((rssiNumber >= 0) & (rssiNumber <= 10)):
+        #     self.__networkAndConnectNotify.changeIntensity(1)
+        # else:
+        #     self.__networkAndConnectNotify.changeIntensity(0)
 
     def __reciptSPN(self, message):
         try:
@@ -158,7 +158,7 @@ class ProcessResponse(QObject):
             spnAndDisplayMode = message.split(":")[1]
             spn = spnAndDisplayMode.split(",")[0]
             spn = spn.replace('"', '')
-            self.__networkAndConnectNotify.showSPN(spn)
+            # self.__networkAndConnectNotify.showSPN(spn)
         except Exception as ex:
             print("__reciptSPN", ex)
 
@@ -173,23 +173,23 @@ class ProcessResponse(QObject):
             status = 0
         if(status == 0):
             self.flagIs4Gor3G = False
-            self.__networkAndConnectNotify.showNetworkMode('?')
+            # self.__networkAndConnectNotify.showNetworkMode('?')
 
         elif(status == 1):
             self.flagIs4Gor3G = False
-            self.__networkAndConnectNotify.showNetworkMode('2G')
+            # self.__networkAndConnectNotify.showNetworkMode('2G')
 
         elif((status == 2) | (status == 3)):
             self.flagIs4Gor3G = True
-            self.__networkAndConnectNotify.showNetworkMode("2.5G")
+            # self.__networkAndConnectNotify.showNetworkMode("2.5G")
 
         elif((status == 4) | (status == 5) | (status == 6) | (status == 7)):
             self.flagIs4Gor3G = True
-            self.__networkAndConnectNotify.showNetworkMode("3G")
+            # self.__networkAndConnectNotify.showNetworkMode("3G")
             
         elif((status == 8)):
             self.flagIs4Gor3G = True
-            self.__networkAndConnectNotify.showNetworkMode("4G")   
+            # self.__networkAndConnectNotify.showNetworkMode("4G")   
 
     def __convertImeiToListByte(self, stringImei):
         lstByte = []

@@ -12,6 +12,7 @@ class Main(QObject):
     __concentratordAndForwarderPM:ProcessManagement
     def __init__(self):
         QObject.__init__(self)
+        print("bat dau khoi dong")
         self.__networkModuleController = ControlNetWorkModule()
         self.__networkModuleController.Start4Gmodule()
         self.__concentratordAndForwarderPM = ProcessManagement()
